@@ -1,0 +1,41 @@
+int BIENTRO=0;
+int TOCDO=0;
+int command;
+int led = 5;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+  pinMode(led, OUTPUT);
+  digitalWrite(led, LOW);
+}
+
+void highest()
+{
+  analogWrite(led, 255);
+}
+
+void Stoprobot()
+{  
+  analogWrite(led, 0); 
+}
+void loop(){
+  // put your main code here, to run repeatedly:
+  BIENTRO = analogRead(A5);
+  //Serial.println(BIENTRO);
+  
+  TOCDO = map(BIENTRO,0,1023,0,255);
+  analogWrite(led,TOCDO);
+
+  //Serial.println(TOCDO);
+
+
+  if (Serial.available() > 0){ 
+  command = Serial.read();
+  
+  if (command == 'O') highest();
+  else if (command == 'S') Stoprobot();
+  }
+  //delay(1000);
+
+}
